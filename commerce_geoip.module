@@ -1,0 +1,26 @@
+<?php
+/**
+* @file
+* Displays the Country of the IP address of an order below the IP address.
+*/
+
+/**
+ * Implements hook_preprocess_HOOK() for commerce-order-admin template
+ */
+
+function commerce_geoip_preprocess_commerce_order(&$variables){
+	/** @var Drupal\commerce_order\Entity\OrderInterface $order */
+	$order = $variables['elements']['#commerce_order'];
+	/** @var \Drupal\geoip\GeoLocation $getlocation */
+	$getlocation = \Drupal::service('geoip.geolocation');
+	$customer_ip = $order->getIpAddress();
+	$country = $getlocation->geolocate($customer_ip);
+	if (isset($country)) {
+		$customer_country = $country->getName();
+}
+else {
+	$customer_country = 'Not Available';
+}
+$variables['order']['ip_address']['#suffix'] = '<div class="form-item"><h4 class="label inline">Country: </h4>'.$customer_country.'</div>';
+}
+

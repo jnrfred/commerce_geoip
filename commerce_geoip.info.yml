@@ -1,0 +1,8 @@
+name: Commerce GeoIP
+type: module
+description: 'Integrates GeoIP with Drupal Commerce.'
+core: 8.x
+dependencies:
+  - commerce
+  - commerce:commerce_order
+  - geoip
